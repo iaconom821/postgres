@@ -168,6 +168,8 @@ function Connection(options, queues = {}, { onopen = noop, onend = noop, onclose
         : (query = q, query.active = true)
 
       build(q)
+      q.statistics && (q.statistics.executed = performance.now())
+      q.handler.onquery && (q.handler.onquery = q.handler.onquery(q))
       return write(toBuffer(q))
         && !q.describeFirst
         && !q.cursorFn
@@ -388,7 +390,7 @@ function Connection(options, queues = {}, { onopen = noop, onend = noop, onclose
   }
 
   function queryError(query, err) {
-    Object.defineProperties(err, {
+    'query' in err || 'parameters' in err || Object.defineProperties(err, {
       stack: { value: err.stack + query.origin.replace(/.*\n/, '\n'), enumerable: options.debug },
       query: { value: query.string, enumerable: options.debug },
       parameters: { value: query.parameters, enumerable: options.debug },
