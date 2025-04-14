@@ -40,14 +40,14 @@ export class Query extends Promise {
   resolve(x) {
     this.active = false
     this.statistics && addStats(this, x)
-    this.handler.onquery && (this.handler.onquery = this.handler.onquery(x))
+    this.onquery && (this.onquery = this.onquery(x))
     this.resolver(x)
   }
 
   reject(x) {
     this.active = false
     this.statistics && addStats(this, x)
-    this.handler.onquery && (this.handler.onquery = this.handler.onquery(x))
+    this.onquery && (this.onquery = this.onquery(x))
     this.rejecter(x)
   }
 
