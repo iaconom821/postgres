@@ -48,7 +48,6 @@ Object.assign(Postgres, {
 export default Postgres
 
 function Postgres(a, b) {
-  console.log("hello from postgres index.js", 51)
   const options = parseOptions(a, b)
       , subscribe = options.no_subscribe || Subscribe(Postgres, { ...options })
 

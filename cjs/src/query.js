@@ -162,7 +162,6 @@ const Query = module.exports.Query = class Query extends Promise {
       return
 
     this.executed = true
-    console.log('handle query in query.js')
     await 1
     this.statistics && (this.statistics.started = performance.now())
     this.onquery && (this.onquery = this.onquery(this))
